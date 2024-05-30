@@ -20,7 +20,7 @@ async function generateShorID(req, res) {
         visitHistory: []
     });
 
-    return res.json({
+    return res.render('home',{
         shortID: shortID
     });
 }

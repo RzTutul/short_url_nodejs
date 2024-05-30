@@ -1,0 +1,76 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content {
+            flex: 1;
+        }
+        .footer {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container content mt-5">
+        <h1 class="text-center">Welcome to URL Shortener</h1>
+
+        <% if (locals.shortID) { %>
+            <div class="alert alert-success text-center mt-3">
+                <p>Shortened URL: <a href="<%= shortID %>" target="_blank" id="shortUrl"><%= shortID %></a>
+                <button class="btn btn-outline-secondary btn-sm ml-2" onclick="copyToClipboard()">Copy</button></p>
+            </div>
+        <% } %>
+
+        <div class="card mt-5">
+            <div class="card-body">
+                <form method="POST" action="/url">
+                    <div class="form-group">
+                        <label for="url">Enter your URL</label>
+                        <input type="text" class="form-control" name="url" placeholder="Enter your URL" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block  ">Generate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer py-3 mt-auto">
+        <div class="container text-center">
+            <span class="text-muted">Powered by Arcadexit</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for Copy to Clipboard -->
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("shortUrl").href;
+            var tempInput = document.createElement("input");
+            tempInput.style.position = "absolute";
+            tempInput.style.left = "-9999px";
+            tempInput.value = copyText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            alert("Copied to clipboard: " + copyText);
+        }
+    </script>
+</body>
+</html>
